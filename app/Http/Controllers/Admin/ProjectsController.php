@@ -86,7 +86,8 @@ class ProjectsController extends Controller
     public function edit(Project $project)
     {
         $types = Type::All();
-        return view('admin.projects.edit', compact('project', 'types'));
+        $technologies = Technology::All();
+        return view('admin.projects.edit', compact('project', 'types', 'technologies'));
     }
 
     /**
@@ -94,6 +95,8 @@ class ProjectsController extends Controller
      */
     public function update(Request $request, Project $project)
     {
+        $form_data = $request->all();
+
         $val_data = $request->validate([
             'name' => 'required|min:2|max:20',
         ],
@@ -107,13 +110,16 @@ class ProjectsController extends Controller
 
         $exist = Project::where('name', $request->name)->first();
 
-        if($exist){
-            return redirect()->route('admin.projects.index')->with('error', 'Progetto gia presente');
+        $val_data['slug'] = Helper::generateSlug($request->name, Project::class);
+        $project->update($val_data);
+
+        if(array_key_exists('technologies', $form_data)){
+            $project->technologies()->sync($form_data['technologies']);
         }else{
-            $val_data['slug'] = Helper::generateSlug($request->name, Project::class);
-            $project->update($val_data);
-            return redirect()->route('admin.projects.index')->with('success', 'Progetto modificato correttamente');
+            $project->technologies()->detach();
         }
+
+        return redirect()->route('admin.projects.show', $project)->with('success', 'Progetto modificato correttamente');
     }
 
     /**
