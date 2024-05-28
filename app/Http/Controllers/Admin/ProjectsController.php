@@ -97,6 +97,11 @@ class ProjectsController extends Controller
     {
         $form_data = $request->all();
 
+        if(array_key_exists('image', $form_data)){
+            $image_path = Storage::put('uploads', $form_data['image']);
+            $form_data['image'] = $image_path;
+        }
+
         $val_data = $request->validate([
             'name' => 'required|min:2|max:20',
         ],
@@ -107,6 +112,7 @@ class ProjectsController extends Controller
         ]);
 
         $val_data['type_id'] =  (int)$request->type_id;
+        $val_data['image'] =  $image_path;
 
         $exist = Project::where('name', $request->name)->first();
 
