@@ -12,10 +12,13 @@
             <p class="fs-5">{{$project->description}}</p>
             <h2 class="fw-bold">Tecnologie Usate</h2>
             <ul class="list-unstyled d-flex fs-5">
-                @foreach ($project->technologies as $tecnology)
+                @forelse ($project->technologies as $tecnology)
                     <li class="mx-1">|</li>
                     <li>{{$tecnology->name}}</li>
-                @endforeach
+                @empty
+                    <li class="mx-1">|</li>
+                    <li>Nessuna tecnologia</li>
+                @endforelse
                 <li class="mx-1">|</li>
             </ul>
             @if (isset($project->image))
