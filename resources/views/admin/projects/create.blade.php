@@ -31,9 +31,17 @@
                         <select class="form-select" aria-label="Default select example" name="type_id">
                             <option selected value="">Type</option>
                             @foreach ($types as $type)
-                                <option value="{{ $type->id }}">{{ $type->name }}</option>
+                            <option value="{{ $type->id }}">{{ $type->name }}</option>
                             @endforeach
                         </select>
+                    </div>
+                    <label for="exampleInputPassword1" class="form-label">Tecnologie Usate</label>
+                    <br>
+                    <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+                        @foreach ($technologies as $technology)
+                            <input name="technologies[]" type="checkbox" value="{{ $technology->id }}" class="btn-check" id="{{'btncheck' . $technology->id}}" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="{{'btncheck' . $technology->id}}" >{{$technology->name}}</label>
+                        @endforeach
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputPassword1" class="form-label">Descrizione Progetto</label>

@@ -7,6 +7,7 @@ use App\Models\Project;
 use App\Models\Type;
 use Illuminate\Http\Request;
 use App\Functions\Helper;
+use App\Models\Technology;
 use Illuminate\Support\Facades\Storage;
 
 class ProjectsController extends Controller
@@ -27,8 +28,9 @@ class ProjectsController extends Controller
     public function create()
     {
         $types = Type::All();
+        $technologies = Technology::All();
         $projects = Project::All();
-        return view('admin.projects.create', compact('projects', 'types'));
+        return view('admin.projects.create', compact('projects', 'types', 'technologies'));
     }
 
     /**
@@ -57,13 +59,15 @@ class ProjectsController extends Controller
         if($exist){
             return redirect()->route('admin.projects.index')->with('error', 'Progetto gia presente');
         }else{
+            $form_data['slug'] = Helper::generateSlug($form_data['name'] , Project::class);
             $new = new Project();
-            $new->name = $request->name;
-            $new->type_id = $request->type_id;
-            $new->description = $request->description;
-            $new->image = $image_path;
-            $new->slug = Helper::generateSlug($new->name, Project::class);
+            $new->fill($form_data);
             $new->save();
+
+            if(array_key_exists('technologies', $form_data)){
+                $new->technologies()->attach($form_data['technologies']);
+            }
+
             return redirect()->route('admin.projects.index')->with('success', 'Progetto inserito correttamente');
         }
     }
