@@ -4,9 +4,20 @@
 
     <div class="col bg-success h-100 overflow-auto d-flex flex-nowrap">
         <div class="my-3 mx-2 p-3 w-100 bg-light shadow">
-            <h1>{{$project->name}}</h1>
-            <h3>{{$project->type->name}}</h3>
-            <p>{{$project->description}}</p>
+            <h1 class="fw-bold">Titolo</h1>
+            <h3>{{$project->name}}</h3>
+            <h2 class="fw-bold">Tipologgia</h2>
+            <h4>{{$project->type->name}}</h4>
+            <h2 class="fw-bold">Descrizzione</h2>
+            <p class="fs-5">{{$project->description}}</p>
+            <h2 class="fw-bold">Tecnologie Usate</h2>
+            <ul class="list-unstyled d-flex fs-5">
+                @foreach ($project->technologies as $tecnology)
+                    <li class="mx-1">|</li>
+                    <li>{{$tecnology->name}}</li>
+                @endforeach
+                <li class="mx-1">|</li>
+            </ul>
             @if (isset($project->image))
                 <img style="max-width: 500px" src="{{ asset('storage/'. $project->image) }}" alt="{{$project->name}}">
             @endif
