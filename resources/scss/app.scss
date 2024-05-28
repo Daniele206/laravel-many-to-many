@@ -1,0 +1,41 @@
+@import '~bootstrap/scss/bootstrap';
+
+.my_nav_h{
+    height: 80px;
+    .p_log-out{
+        padding: 10px 20px;
+    }
+}
+
+.cont_h{
+    .lh_li{
+        display: flex;
+        justify-content: center;
+        margin-top: 17px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        width: 130px;
+        border: 1px solid white;
+        transition: 0.3s;
+        &:hover{
+            transition: 0.3s;
+            background-color: white;
+            a{
+                color:black !important;
+            }
+        }
+    }
+    .imp_reed{
+        border: none;
+        outline: none;
+        &:focus{
+            outline: 1px solid blue;
+            border-radius: 2px;
+        }
+    }
+    height: calc(100vh - 80px);
+}
+
+.w-98{
+    width: 98%;
+}
