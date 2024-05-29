@@ -13,17 +13,12 @@
                 <a class="nav-link text-light" target="_blank" href="{{ route('home') }}">Sito Publico</a>
               </li>
             </ul>
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                  <a class="nav-link text-capitalize text-light" href="#">{{ Auth::user()->name }}</a>
-                </li>
-                <li class="nav-item d-flex align-items-center">
-                    <form action="{{ route('logout') }}" method="POST">
-                        @csrf
-                        <button class="btn btn-danger p_log-out text-light"><i class="fa-solid fa-right-from-bracket"></i></button>
-                    </form>
-                </li>
-              </ul>
+            <div class="w-25">
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Cerca" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Cerca</button>
+                </form>
+            </div>
           </div>
         </div>
       </nav>

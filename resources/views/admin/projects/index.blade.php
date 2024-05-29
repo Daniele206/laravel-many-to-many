@@ -75,7 +75,7 @@
                                 <div class="carousel-item bg-black w-100 h-100">
                                     <img class="d-block w-100 h-100 opacity-50 ratio-16x9" src="{{ asset('storage/'. $project->image) }}" alt="{{ $project->image }}">
                                     <div class="carousel-caption d-none d-md-block">
-                                        <h4 class="fw-bold">{{  $project->name }}</h4>
+                                        <h4 class="fw-bold"><a class="text-light" href="{{ route('admin.projects.show', $project) }}">{{  $project->name }}</a></h4>
                                         <p class="fs-5">{{  $project->type->name }}</p>
                                     </div>
                                 </div>
