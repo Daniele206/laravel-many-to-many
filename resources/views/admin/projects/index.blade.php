@@ -93,10 +93,4 @@
                 </div>
             </div>
         </div>
-        <script>
-            function submitForm(id){
-                const form = document.getElementById(`form-edit-${id}`);
-                form.submit();
-            }
-        </script>
 @endsection

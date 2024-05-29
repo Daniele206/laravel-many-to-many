@@ -24,12 +24,12 @@
                 @csrf
                     <div class="mb-3">
                         <label class="form-label">Titolo del progetto</label>
-                        <input type="text" name="name" class="form-control" value="{{ old('description')}}">
+                        <input type="text" name="name" class="form-control" value="{{ old('name')}}">
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputPassword1" class="form-label">Tipo di progetto</label>
                         <select class="form-select" aria-label="Default select example" name="type_id">
-                            <option selected value="">Type</option>
+                            <option selected value="{{ old('type_id') }}">Type</option>
                             @foreach ($types as $type)
                             <option value="{{ $type->id }}">{{ $type->name }}</option>
                             @endforeach
@@ -61,6 +61,7 @@
                         <input type="file" class="form-control" name="image">
                     </div>
                 <button type="submit" class="btn btn-outline-success">Submit</button>
+                <a href="{{ route('admin.projects.index') }}" type="submit" class="btn btn-outline-danger">Back</a>
             </form>
         </div>
     </div>

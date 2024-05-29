@@ -17,14 +17,35 @@ class ProjectsController extends Controller
      */
     public function index()
     {
-        $types = Type::All();
         $projects = Project::All();
-        return view('admin.projects.index', compact('projects', 'types'));
+        return view('admin.projects.index', compact('projects'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    public function filter(Request $request){
+
+        $word = $request->name;
+
+        $original_projects = Project::All();
+
+        $filtered_projects = [];
+
+        foreach($original_projects as $project){
+
+            $include = strpos($project->name, $word) !== false;
+
+            if ($include) {
+                array_push($filtered_projects, $project);
+            }
+
+        }
+
+        $projects = $filtered_projects;
+
+        // dd($project);
+
+        return view('admin.projects.index', compact('projects'));
+    }
+
     public function create()
     {
         $types = Type::All();
@@ -32,6 +53,7 @@ class ProjectsController extends Controller
         $projects = Project::All();
         return view('admin.projects.create', compact('projects', 'types', 'technologies'));
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -68,7 +90,7 @@ class ProjectsController extends Controller
                 $new->technologies()->attach($form_data['technologies']);
             }
 
-            return redirect()->route('admin.projects.index')->with('success', 'Progetto inserito correttamente');
+            return redirect()->route('admin.projects.show', $new->id)->with('success', 'Progetto inserito correttamente');
         }
     }
 
@@ -87,7 +109,7 @@ class ProjectsController extends Controller
     {
         $types = Type::All();
         $technologies = Technology::All();
-        return view('admin.projects.edit', compact('project', 'types', 'technologies'));
+        return view('admin.projects.show', compact('project', 'types', 'technologies'));
     }
 
     /**
